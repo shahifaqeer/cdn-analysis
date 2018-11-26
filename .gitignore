@@ -1,0 +1,4 @@
+.DS_Store
+.ipynb_checkpoints/
+top-1m.csv
+top-1m.csv.tar.gz
