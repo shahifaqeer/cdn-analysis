@@ -1,134 +1,136 @@
-'AAPT',
-'ARA Networks',
-'AT&T',
-'AT&T Inc.',
-'Akamai',
-'Akamai Technologies',
-'Alibaba',
-'Allot Communications',
-'Amazon',
-'Amazon CloudFront',
-'Aryaka',
-'Azure CDN',
-'BT',
-'BT Group',
-'BTI Systems',
-'Bell',
-'Bell Canada',
-'BelugaCDN',
-'Bharti Airtel',
-'BitTorrent, Inc.',
-'Blue Coat',
-'BootstrapCDN',
-'Broadmedia',
-'Broadpeak',
-'CDN77',
-'CDNetworks',
-'CacheFly',
-'Cedexis',
-'CenterServ',
-'CenturyLink',
-'China Telecom',
-'ChinaCache',
-'ChinaNetCenter',
-'Cisco',
-'Cloudflare',
-'Comcast',
-'Concentric',
-'Concurrent',
-'Conversant',
-'Conviva',
-'Coral Content Distribution Network',
-'Cotendo',
-'Deutsche Telekom',
-'EdgeCast Networks',
-'Edgeware',
-'Ericsson',
-'Fastly',
-'Fortinet',
-'Google Cloud',
-'HP Cloud Services',
-'HiNet',
-'Hibernia Networks',
-'Highwinds',
-'Highwinds Network Group',
-'Hola',
-'Huawei',
-'Incapsula',
-'IneoQuest',
-'Instart',
-'Instart Logic',
-'Interferex',
-'Internap',
-'Interoute',
-'JSDelivr',
-'Jetstream',
-'Juniper ',
-'KPN',
-'KT',
-'Korea Telecom',
-'LeaseWeb',
-'Level 3',
-'Level 3 Communications',
-'Limelight Networks',
-'Megafon',
-'MetaCDN',
-'Microsoft Azure',
-'MileWEB',
-'Mirror Image',
-'NACEVI',
-'NTT',
-'NTT Communications',
-'NaviSite',
-'Ngenix',
-'Nice People At Work',
-'Nokia',
-'OVH',
-'OnApp',
-'Ono',
-'Orange',
-'PCCW',
-'Pacnet',
-'Pando Networks',
-'PeerApp',
-'Qualitynet',
-'Qwilt',
-'Rackspace Cloud Files',
-'Radware',
-'Rawflow',
-'Reliance Globalcom',
-'RevAMP',
-'SFR',
-'SK Broadband',
-'SKY',
-'SSIMWave',
-'STC',
-'SingTel',
-'Solbox',
-'Spark New Zealand',
-'Speedera Networks',
-'StackPath',
-'StreamZilla',
-'Swarmify',
-'Swiftserve',
-'Swisscom',
-'Tata Communications',
-'Telcom Italia',
-'Telecom Argentina',
-'Telecom Italia',
-'Telecom Italia Sparkle',
-'Telecom Malaysia',
-'Telefonica',
-'Telenor',
-'TeliaSonera',
-'Telin',
-'Telstra',
-'Telus',
-'Touchstream',
-'Turk Telekom',
-'Varnish',
-'Verizon',
-'Vidscale',
-'Wangsu Science & Technology',
-'Webscale',
-'Yottaa'
+AAPT
+ARA Networks
+AT&T
+Akamai
+Alibaba
+Allot Communications
+Amazon
+Amazon CloudFront
+Aryaka
+Azure CDN
+BT
+BT Group
+BTI Systems
+Bell
+Bell Canada
+BelugaCDN
+Bharti Airtel
+BhartiAirtel
+BitTorrent
+Blue Coat
+BootstrapCDN
+Broadmedia
+Broadpeak
+CDN77
+CDNetworks
+CacheFly
+Cedexis
+CenterServ
+CenturyLink
+China Telecom
+ChinaTelecom
+ChinaCache
+ChinaNetCenter
+Cisco
+Cloudflare
+Comcast
+Concentric
+Concurrent
+Conversant
+Conviva
+Coral
+Cotendo
+Deutsche Telekom
+EdgeCast
+EdgeCast Networks
+Edgeware
+Ericsson
+Fastly
+Fortinet
+Google
+Google Cloud
+HP Cloud Services
+HiNet
+Hibernia Networks
+Highwinds
+Highwinds Network Group
+Hola
+Huawei
+Incapsula
+IneoQuest
+Instart
+Instart Logic
+Interferex
+Internap
+Interoute
+JSDelivr
+Jetstream
+Juniper 
+KPN
+KT
+Korea Telecom
+LeaseWeb
+Level 3
+Level 3 Communications
+Limelight Networks
+Megafon
+MetaCDN
+Microsoft Azure
+MileWEB
+Mirror Image
+NACEVI
+NTT
+NTT Communications
+NaviSite
+Ngenix
+Nice People At Work
+Nokia
+OVH
+OnApp
+Ono
+Orange
+PCCW
+Pacnet
+Pando Networks
+PeerApp
+Qualitynet
+Qwilt
+Rackspace Cloud Files
+Radware
+Rawflow
+Reliance Globalcom
+RevAMP
+SFR
+SK Broadband
+SKY
+SSIMWave
+STC
+SingTel
+Solbox
+Spark New Zealand
+Speedera Networks
+StackPath
+StreamZilla
+Swarmify
+Swiftserve
+Swisscom
+Tata Communications
+Telcom Italia
+Telecom Argentina
+Telecom Italia
+Telecom Italia Sparkle
+Telecom Malaysia
+Telefonica
+Telenor
+TeliaSonera
+Telin
+Telstra
+Telus
+Touchstream
+Turk Telekom
+Varnish
+Verizon
+Vidscale
+Wangsu Science & Technology
+Webscale
+Yottaa
