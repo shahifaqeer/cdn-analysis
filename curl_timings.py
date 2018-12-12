@@ -18,8 +18,8 @@ def fetch_url(url):
                               '-w', '@curl_time_format.txt', '-s', url], stdout=subprocess.PIPE)
         out, err = p.communicate()
         result = json.loads(out.decode('UTF-8'))
-        print("%r (%r) fetched with response code %r in %ss"
-              % (url, result['url_effective'], result['response_code'], result['time_total']))
+        #print("%r (%r) fetched with response code %r in %ss"
+        #      % (url, result['url_effective'], result['response_code'], result['time_total']))
     except Exception as e:
         print("Error fetching %r: Exception %s" % (url, e))
         result = None
@@ -41,7 +41,7 @@ def load_url_list(websites, nwebsites=500):
 def main():
 
     list_of_websites = 'top-1m-new.csv'  # location of alexa top websites as RANK,SITE\n
-    count = 100  # average timings over count loops of curl requests
+    count = 20  # average timings over count loops of curl requests
     nthreads = 20 # number of parallel threads for same url
 
     data = defaultdict(list)    # save result as json and load in pandas for averaging and analysis
@@ -52,7 +52,7 @@ def main():
 
         url_counter += 1
         urls_parallel = [url for i in range(count)]
-        print("Start time: %s, URL: %r, Rank: %s" % (time.time(), url, rank))
+        print("Rank: %s, Start time: %s, URL: %r" % (rank, time.time(), url))
 
         pool = multiprocessing.Pool(processes=nthreads)
         pool_outputs = pool.map(fetch_url, urls_parallel)  # pool_output is a list of results
