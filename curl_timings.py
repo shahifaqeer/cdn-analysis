@@ -2,8 +2,8 @@ from __future__ import division
 import subprocess
 import json
 from collections import defaultdict
+import multiprocessing
 import time
-#from multiprocessing.pool import ThreadPool
 #import numpy as np
 
 
@@ -18,20 +18,23 @@ def fetch_url(url):
                               '-w', '@curl_time_format.txt', '-s', url], stdout=subprocess.PIPE)
         out, err = p.communicate()
         result = json.loads(out.decode('UTF-8'))
-        return result, None
+        print("%r (%r) fetched with response code %r in %ss"
+              % (url, result['url_effective'], result['response_code'], result['time_total']))
     except Exception as e:
-        return None, e
+        print("Error fetching %r: Exception %s" % (url, e))
+        result = None
+    return result
 
 
 def load_url_list(websites, nwebsites=500):
     """get top 500 of alexa websites csv <RANK, SITE> and append with 'https://www.' for curl request"""
-    urls = []
+    urls = defaultdict(int)
     from itertools import islice
     with open(websites) as f:
         for line in islice(f, nwebsites):
             rank, site = line.strip().split(',')
             url = 'https://www.' + site + '/'
-            urls.append(url)
+            urls[rank] = url
     return urls
 
 
@@ -39,41 +42,30 @@ def main():
 
     list_of_websites = 'top-1m-new.csv'  # location of alexa top websites as RANK,SITE\n
     count = 100  # average timings over count loops of curl requests
-    # nthreads = 20 # number of parallel threads for same url
+    nthreads = 20 # number of parallel threads for same url
 
     data = defaultdict(list)    # save result as json and load in pandas for averaging and analysis
     urls = load_url_list(list_of_websites, 500)
     url_counter = 0
 
-    for url in urls:
+    for rank, url in urls.items():
 
         url_counter += 1
-        # can do threading here using gevents or multiprocessing to parallelize curl requests
-        for i in range(count):
-            result, error = fetch_url(url)
-            if error is None:
+        urls_parallel = [url for i in range(count)]
+        print("Start time: %s, URL: %r, Rank: %s" % (time.time(), url, rank))
 
-                # if result['response_code'] == '000':
-                #     # try reaching website without www
-                #     url = url.replace("www.", "")
-                #     result, error = fetch_url(url)
-                # elif result['response_code'] == '301' or result['response_code'] == '302':
-                #     # try fetching effective url after redirects instead
-                #     url = result['url_effective']
-                #     result, error = fetch_url(url)
+        pool = multiprocessing.Pool(processes=nthreads)
+        pool_outputs = pool.map(fetch_url, urls_parallel)  # pool_output is a list of results
 
-                [data[key].append(value) for key, value in result.items()]
-                data['rank'].append(url_counter)    # rank of alexa website is same as counter
-                data['url'].append(url)     # original url fetched (before redirect)
+        pool.close()
+        pool.join()
 
-                print("%s %r (%r) fetched with response code %r in %ss on iteration %s "
-                      % (url_counter, url, result['url_effective'], result['response_code'], result['time_total'], i))
-            else:
-                print("Error fetching %s %r (%r): Exception %s on iteration %s"
-                      % (url_counter, url, result['url_effective'], error, i))
-        print()
+        for res in pool_outputs:
+            if res is not None:
+                [data[key].append(res[key]) for key in res.keys()]
+                data['rank'].append(rank)
 
-    with open('curl-timing-data-100.json', 'w') as outfile:
+    with open('output/curl-timing-data.json', 'w') as outfile:
         json.dump(data, outfile)
 
     return
