@@ -4,6 +4,7 @@ import json
 from collections import defaultdict
 import multiprocessing
 import time
+import os
 #import numpy as np
 
 
@@ -27,7 +28,7 @@ def fetch_url(url):
     return result
 
 
-def load_url_list(websites, nwebsites=500):
+def load_urls(websites, nwebsites=500):
     """get top 500 of alexa websites csv <RANK, SITE> and append with 'https://www.' for curl request"""
     urls = defaultdict(int)
     from itertools import islice
@@ -41,13 +42,18 @@ def load_url_list(websites, nwebsites=500):
 
 def main():
 
+    # check for output directory to save files
+    outdir = 'output/'
+    if not os.path.exists(outdir):
+        os.makedirs(outdir)
+
     list_of_websites = 'top-1m-new.csv'  # location of alexa top websites as RANK,SITE\n
     count = 100      # average timings over count loops of curl requests
     nthreads = 20   # number of parallel threads for same url default 20
 
     data = defaultdict(list)    # save result as json and load in pandas for averaging and analysis
-    urls = load_url_list(list_of_websites, 500)
-    inv_urls = {v: k for k, v in urls.items()}  # reverse dictionary to retrieve rank given url
+    urls = load_urls(list_of_websites, 500)
+    #inv_urls = {v: k for k, v in urls.items()}  # reverse dictionary to retrieve rank given url
 
     #url_counter = 0
     #for rank, url in urls.items():
