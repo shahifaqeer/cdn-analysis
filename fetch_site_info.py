@@ -104,7 +104,7 @@ def main():
     sites = load_sites()    #top 500 alexa sites as a dictionary {rank: site}
 
     # load site_to_ip dictionary
-    dfile = "output/site_to_IP_.json"    # preloaded dictionary for 480 sites with valid lookups
+    dfile = "output/site_to_IP.json"    # preloaded dictionary for 480 sites with valid lookups
     if os.path.exists(dfile):
         with open(dfile, 'r') as fin:
             site_to_ip = json.load(fin)
