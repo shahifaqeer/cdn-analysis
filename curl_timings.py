@@ -12,6 +12,7 @@ def fetch_url(url):
     --connect-timeout 5.0s optional, max timeout -m 10.0s, follow redirects using -L flag
     result is ( dict {url_effective, response_code, time_namelookup, time_connect, time_appconnect,
     time_pretransfer, time_redirect, time_starttransfer, time_total}, exception )
+    variable explanations: https://ec.haxx.se/usingcurl-verbose.html
     """
     try:
         p = subprocess.Popen(['curl', '-L', '--connect-timeout', '5.0', '-m', '10.0', '-o', '/dev/null',
@@ -41,18 +42,22 @@ def load_url_list(websites, nwebsites=500):
 def main():
 
     list_of_websites = 'top-1m-new.csv'  # location of alexa top websites as RANK,SITE\n
-    count = 20  # average timings over count loops of curl requests
-    nthreads = 20 # number of parallel threads for same url
+    count = 100      # average timings over count loops of curl requests
+    nthreads = 20   # number of parallel threads for same url default 20
 
     data = defaultdict(list)    # save result as json and load in pandas for averaging and analysis
     urls = load_url_list(list_of_websites, 500)
-    url_counter = 0
+    inv_urls = {v: k for k, v in urls.items()}  # reverse dictionary to retrieve rank given url
 
-    for rank, url in urls.items():
+    #url_counter = 0
+    #for rank, url in urls.items():
+    for i in range(count):
 
-        url_counter += 1
-        urls_parallel = [url for i in range(count)]
-        print("Rank: %s, Start time: %s, URL: %r" % (rank, time.time(), url))
+        #url_counter += 1
+        #urls_parallel = [url for i in range(count)]
+        urls_parallel = urls.values()
+        #print("Rank: %s, Start time: %s, URL: %r" % (rank, time.time(), url))
+        print("Loop: %s, Start time: %s" % (i, time.time()))
 
         pool = multiprocessing.Pool(processes=nthreads)
         pool_outputs = pool.map(fetch_url, urls_parallel)  # pool_output is a list of results
@@ -63,9 +68,9 @@ def main():
         for res in pool_outputs:
             if res is not None:
                 [data[key].append(res[key]) for key in res.keys()]
-                data['rank'].append(rank)
+                #data['rank'].append(inv_urls[res['url_effective']])    # can't use just in case url_effective != url
 
-    with open('output/curl-timing-data.json', 'w') as outfile:
+    with open('output/curl-timing-data-reorder-count100-sites500.json', 'w') as outfile:
         json.dump(data, outfile)
 
     return
