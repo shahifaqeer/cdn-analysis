@@ -1,6 +1,9 @@
-# data from https://github.com/Hossein-Doroud/cdn-detector/blob/master/cdnDetector.py
+# https://github.com/Hossein-Doroud/cdn-detector/blob/master/cdnDetector.py
+# https://github.com/WPO-Foundation/webpagetest/blob/master/agent/wpthook/cdn.h
+# microsoftonline.com : Microsoft Office 365 CDN added separately to cdn_domain
+#cdn_domain = cdnFinder + github_cdn_List
 
-cdnFinder = {
+cdn_domain = {
   ".clients.turbobytes.net":"TurboBytes",
   ".turbobytes-cdn.com":"TurboBytes",
   ".afxcdn.net":"afxcdn.net",
@@ -59,6 +62,7 @@ cdnFinder = {
   ".netdna-ssl.com":"MaxCDN",
   ".netdna.com":"MaxCDN",
   ".mncdn.com":"Medianova",
+  ".microsoftonline.com": "Microsoft Office 365",
   ".instacontent.net":"Mirror Image",
   ".mirror-image.net":"Mirror Image",
   ".cap-mii.net":"Mirror Image",
@@ -72,12 +76,8 @@ cdnFinder = {
   ".vo.msecnd.net":"Windows Azure",
   ".ay1.b.yahoo.com":"Yahoo",
   ".yimg.":"Yahoo",
-  ".zenedge.net":"Zenedge"
-}
-			
-			
-#	https://github.com/WPO-Foundation/webpagetest/blob/master/agent/wpthook/cdn.h
-github_cdn_List = {
+  ".zenedge.net":"Zenedge",
+
   ".akamai.net":"Akamai",
   ".akamaized.net":"Akamai",
   ".akamaiedge.net":"Akamai",
@@ -199,7 +199,7 @@ github_cdn_List = {
   ".hosting4cdn.com":"Hosting4CDN",
   ".netlify.com":"Netlify",
   ".b-cdn.net":"BunnyCDN",
-  ".pix-cdn.org":"Advanced Hosters CDN",}
+  ".pix-cdn.org":"Advanced Hosters CDN"}
   
   
 manual_inspection = {
@@ -255,7 +255,6 @@ manual_inspection = {
 }
 
 # Dictionary of ASs which are dedicated entirely to a given CSP
-
 as_dict = {
 393245:{'csp':'Yahoo', 'as_name':'yahoo-swb', 'class':'Enterpise'},
 36408:{'csp':'cdngp', 'as_name':'cdnetworksus-02', 'class':'Content'},
