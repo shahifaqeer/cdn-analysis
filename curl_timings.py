@@ -4,6 +4,7 @@ import json
 from collections import defaultdict
 import multiprocessing
 import time
+from random import randint
 import os
 #import numpy as np
 
@@ -21,8 +22,11 @@ def fetch_url(rank, url):
         out, err = p.communicate()
         result = json.loads(out.decode('UTF-8'))
         result['rank'] = rank       # adding rank later to make future merges easier
-        print("Rank %s site %r (%r) fetched with response code %r in %ss"
-              % (rank, url, result['url_effective'], result['response_code'], result['time_total']))
+
+        if result['response_code'] != "200":
+            print("Rank %s site %r (%r) fetched with response code %r in %ss"
+                  % (rank, url, result['url_effective'], result['response_code'], result['time_total']))
+
     except Exception as e:
         print("Error fetching %r: Exception %s" % (url, e))
         result = None
@@ -46,7 +50,7 @@ def main():
     list_of_websites = 'top-1m-new.csv'  # location of alexa top websites as RANK,SITE\n
     nwebsites = 500     # top 500 websites default
     count = 100         # count loops of curl requests
-    nthreads = 20       # number of parallel threads for same url default 20
+    nthreads = 25       # number of parallel threads for same url default 20
 
     # check for output directory to save files
     outdir = 'output/'
@@ -56,7 +60,7 @@ def main():
     data = defaultdict(list)    # save result as json and load in pandas for averaging and analysis
     urls = load_urls(list_of_websites, nwebsites)
     rank_url_tuples = list(urls.items())
-    print(rank_url_tuples)
+    #print(rank_url_tuples)
 
     for i in range(count):
 
@@ -69,11 +73,13 @@ def main():
         pool.close()
         pool.join()
 
+        time.sleep(randint(10, 30))  # add random sleep time as certain google servers become annoying
+
         for res in pool_outputs:
             if res is not None:
                 [data[key].append(res[key]) for key in res.keys()]
 
-    savefile = 'output/curl-timing-data-reorder-count%s-sites%s.json' %(count. nwebsites)
+    savefile = 'output/curl-timing-data-reorder-count%s-sites%s.json' %(count, nwebsites)
     with open(savefile, 'w') as outfile:
         json.dump(data, outfile)
 
