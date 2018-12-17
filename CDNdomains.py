@@ -1,13 +1,16 @@
 # https://github.com/Hossein-Doroud/cdn-detector/blob/master/cdnDetector.py
 # https://github.com/WPO-Foundation/webpagetest/blob/master/agent/wpthook/cdn.h
-# add twimg.com: Twitter CDN
+
+# Changes
 # microsoftonline.com : Microsoft Office 365 CDN added separately to cdn_domain
 # remove doubleclick.net: BitGravity as doubleclick.net belongs to Google CDN
-
+# added alicdn.com: Alibaba Cloud service
 
 #cdn_domain = cdnFinder + github_cdn_List
 
 cdn_domain = {
+  ".microsoftonline.com": "Microsoft Office 365",
+  ".alicdn.com":"AlibabaCloud",
   ".clients.turbobytes.net":"TurboBytes",
   ".turbobytes-cdn.com":"TurboBytes",
   ".afxcdn.net":"afxcdn.net",
@@ -66,7 +69,6 @@ cdn_domain = {
   ".netdna-ssl.com":"MaxCDN",
   ".netdna.com":"MaxCDN",
   ".mncdn.com":"Medianova",
-  ".microsoftonline.com": "Microsoft Office 365",
   ".instacontent.net":"Mirror Image",
   ".mirror-image.net":"Mirror Image",
   ".cap-mii.net":"Mirror Image",
