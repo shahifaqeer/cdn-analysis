@@ -30,6 +30,14 @@ def count_netlocs(data):
         loc = tag.get('src')  # srcset should be counted only once for the src
         netlocs_static.append(getnetloc(loc))
 
+    tags = soup.findAll('source')
+    for tag in tags:
+        loc = tag.get('data-srcset')  # srcset should be counted only once for the src
+        netlocs_static.append(getnetloc(loc))
+    for tag in tags:
+        loc = tag.get('srcset')  # srcset should be counted only once for the src
+        netlocs_static.append(getnetloc(loc))
+
     tags = soup.findAll('link')
     for tag in tags:
         loc = tag.get('href')
