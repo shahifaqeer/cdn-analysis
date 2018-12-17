@@ -1,6 +1,10 @@
 # https://github.com/Hossein-Doroud/cdn-detector/blob/master/cdnDetector.py
 # https://github.com/WPO-Foundation/webpagetest/blob/master/agent/wpthook/cdn.h
+# add twimg.com: Twitter CDN
 # microsoftonline.com : Microsoft Office 365 CDN added separately to cdn_domain
+# remove doubleclick.net: BitGravity as doubleclick.net belongs to Google CDN
+
+
 #cdn_domain = cdnFinder + github_cdn_List
 
 cdn_domain = {
@@ -147,7 +151,6 @@ cdn_domain = {
   ".cdn77.net":"CDN77",
   ".cdn77.org":"CDN77",
   ".incapdns.net":"Incapsula",
-  ". doubleclick.net":"BitGravity",
   ".r.worldcdn.net":"OnApp",
   ".r.worldssl.net":"OnApp",
   ".tbcdn.cn":"Taobao",
