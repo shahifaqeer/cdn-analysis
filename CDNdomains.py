@@ -2,15 +2,23 @@
 # https://github.com/WPO-Foundation/webpagetest/blob/master/agent/wpthook/cdn.h
 
 # Changes
-# microsoftonline.com : Microsoft Office 365 CDN added separately to cdn_domain
+# added microsoftonline.com is Auth portal but microsoftonline-p.com: Microsoft Office CDN
 # remove doubleclick.net: BitGravity as doubleclick.net belongs to Google CDN
 # added alicdn.com: Alibaba Cloud service
+# added licdn.com: LinkedIn CDN to host images and media
+# added nflxvideo.net: Open-Connect Netflix (https://firebounty.com/104-netflix)
+# added msocdn.com and cdn.office.net: Akamai CDN for microsoft office 365 services (https://www.dns-as.org/support/dns-as-cloud-apps/)
 
 #cdn_domain = cdnFinder + github_cdn_List
 
 cdn_domain = {
-  ".microsoftonline.com": "Microsoft Office 365",
+  ".microsoftonline-p.com": "Microsoft Office CDN",
+  ".microsoftonline-p.net":"Microsoft Office CDN",
   ".alicdn.com":"AlibabaCloud",
+  ".licdn.com":"LinkedIn CDN",
+  ".nflxvideo.net":"Open-Connect CDN (Netflix)",
+  ".msocdn.com":"Akamai",
+  ".cdn.office.net":"Akamai",
   ".clients.turbobytes.net":"TurboBytes",
   ".turbobytes-cdn.com":"TurboBytes",
   ".afxcdn.net":"afxcdn.net",
