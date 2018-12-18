@@ -8,6 +8,10 @@
 # added licdn.com: LinkedIn CDN to host images and media
 # added nflxvideo.net: Open-Connect Netflix (https://firebounty.com/104-netflix)
 # added msocdn.com and cdn.office.net: Akamai CDN for microsoft office 365 services (https://www.dns-as.org/support/dns-as-cloud-apps/)
+# added ssl-images-amazon.com: Amazon not Amazon cloudfront, belongs to AS16509 Amazon AWS
+# redditstatic.com is currently hosted by Fastly, but was previously Cloudfront, and even earlier Akamai. Use whois.
+# added .atlassian.com: Amazon, belongs to AS16509 Amazon AWS
+# added .pstatic.net: Akamai, belongs to AS16625 to serve content
 
 #cdn_domain = cdnFinder + github_cdn_List
 
@@ -19,6 +23,9 @@ cdn_domain = {
   ".nflxvideo.net":"Open-Connect CDN (Netflix)",
   ".msocdn.com":"Akamai",
   ".cdn.office.net":"Akamai",
+  ".ssl-images-amazon.com":"Amazon",
+  ".atlassian.com":"Amazon",
+  ".pstatic.net":"Akamai",
   ".clients.turbobytes.net":"TurboBytes",
   ".turbobytes-cdn.com":"TurboBytes",
   ".afxcdn.net":"afxcdn.net",
