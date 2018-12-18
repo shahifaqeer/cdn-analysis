@@ -16,6 +16,7 @@
 # added .cdn.sohucs.com: Sohu CS Media currently hosted by Beijing Media
 # added .office365.com: Akamai although it is auth portal for microsoft office
 # replaced all Akamai Microsoft resources with Microsoft
+# add .media-amazon.com:"Amazon AWS" and fix ssl-images-amazon.com to AWS
 # TO ADD .twitchcdn.net: Fastly
 
 #cdn_domain = cdnFinder + github_cdn_List
@@ -29,13 +30,14 @@ cdn_domain = {
   ".nflxvideo.net":"Open-Connect (Netflix)",
   ".msocdn.com":"Microsoft",
   ".cdn.office.net":"Microsoft",
-  ".ssl-images-amazon.com":"Amazon",
-  ".atlassian.com":"Amazon",
+  ".ssl-images-amazon.com":"Amazon AWS",
+  ".atlassian.com":"Amazon Cloudfront",
   ".pstatic.net":"Akamai",
   ".sfdcstatic.com":"Akamai",
   ".cdn.sohucs.com":"Sohu",
   ".office365.com":"Microsoft",
   ".nflxext.com":"Open-Connect (Netflix)",
+  ".media-amazon.com":"Amazon AWS",
   ".clients.turbobytes.net":"TurboBytes",
   ".turbobytes-cdn.com":"TurboBytes",
   ".afxcdn.net":"afxcdn.net",
