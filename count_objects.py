@@ -4,6 +4,16 @@ import urllib
 import os
 # import re
 
+"""
+### page parse data
+- saved in output/homepage/
+    - use requests to download website and save it
+- count number of objects per url
+    - load downloaded page and use BeautifulSoup to parse it
+    - count sources and links for a, link, img, script tags on page
+    - static objects like images and scripts are usually on website host IP
+"""
+
 
 def getnetloc(loc):
     """netloc is base url"""
