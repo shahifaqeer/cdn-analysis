@@ -18,6 +18,7 @@
 # replaced all Akamai Microsoft resources with Microsoft
 # add .media-amazon.com:"Amazon AWS" and fix ssl-images-amazon.com to AWS
 # TO ADD .twitchcdn.net: Fastly
+# remove KT, SKY from cdn_names as comparison was causing errors due to partial matches
 
 #cdn_domain = cdnFinder + github_cdn_List
 
@@ -337,7 +338,6 @@ cdn_names = [
   'RevAMP',
   'SFR',
   'SK Broadband',
-  'SKY',
   'SoftLayer',
   'SSIMWave',
   'STC',
