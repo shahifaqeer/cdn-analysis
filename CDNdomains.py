@@ -31,7 +31,7 @@ cdn_domain = {
   ".msocdn.com":"Microsoft",
   ".cdn.office.net":"Microsoft",
   ".ssl-images-amazon.com":"Amazon AWS",
-  ".atlassian.com":"Amazon Cloudfront",
+  ".atlassian.com":"Amazon CloudFront",
   ".pstatic.net":"Akamai",
   ".sfdcstatic.com":"Akamai",
   ".cdn.sohucs.com":"Sohu",
