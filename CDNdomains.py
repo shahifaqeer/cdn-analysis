@@ -303,7 +303,6 @@ cdn_names = [
   'Jetstream',
   'Juniper ',
   'KPN',
-  'KT',
   'Korea Telecom',
   'LeaseWeb',
   'Level 3',
