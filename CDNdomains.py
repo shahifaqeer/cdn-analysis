@@ -20,8 +20,8 @@
 # TO ADD .twitchcdn.net: Fastly
 # remove KT, SKY from cdn_names as comparison was causing errors due to partial matches
 # replace Instartlogic by Instart Logic for better matches on whois
-# remove/comment out ".pix-cdn.org":"Advanced Hosters CDN" - txxx.com should be cloudfront?
-
+# remove/comment out ".pix-cdn.org":"Advanced Hosters CDN" - txxx.com should be cloudfront based on whois IP
+# replace ".tl88.net":"Akamai China CDN" with just Akamai to avoid confusion
 
 #cdn_domain = cdnFinder + github_cdn_List
 
@@ -124,7 +124,7 @@ cdn_domains = {
   ".srip.net":"Akamai",
   ".akamaitechnologies.com":"Akamai",
   ".akamaitechnologies.fr":"Akamai",
-  ".tl88.net":"Akamai China CDN",
+  ".tl88.net":"Akamai",
   ".llnwd.net":"Limelight",
   ".edgecastcdn.net":"EdgeCast",
   ".systemcdn.net":"EdgeCast",
