@@ -20,6 +20,8 @@
 # TO ADD .twitchcdn.net: Fastly
 # remove KT, SKY from cdn_names as comparison was causing errors due to partial matches
 # replace Instartlogic by Instart Logic for better matches on whois
+# remove/comment out ".pix-cdn.org":"Advanced Hosters CDN" - txxx.com should be cloudfront?
+
 
 #cdn_domain = cdnFinder + github_cdn_List
 
@@ -233,7 +235,7 @@ cdn_domains = {
   ".hosting4cdn.com":"Hosting4CDN",
   ".netlify.com":"Netlify",
   ".b-cdn.net":"BunnyCDN",
-  ".pix-cdn.org":"Advanced Hosters CDN"
+  #".pix-cdn.org":"Advanced Hosters CDN"
 }
 
 # for checking whois Organizations
