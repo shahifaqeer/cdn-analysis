@@ -92,9 +92,10 @@ def main():
         for org in list( set(Org1+Org2) ):
             for cdn in all_cdn_names:
                 if (org.lower() in cdn.lower()) or (cdn.lower() in org.lower()):
-                    print(site + "cdn match "+str(i)+" : " + cdn)
+                    print(site + " cdn match "+str(i)+" : " + cdn)
                     i += 1
         print()
+        # results after debugging show matches are same so just get first one and return
     return
 
 
