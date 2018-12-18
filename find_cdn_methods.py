@@ -53,13 +53,16 @@ def find_cdn_by_counting_url(site):
     """end save"""
 
     if cnt:
+        sum_url_cnt = sum([url_cnt for url, url_cnt in cnt])
         # print(site+":", end="")
         # print(cnt[:4])
+        # print(sum_url_cnt)
 
         for url, url_cnt in cnt:
 
-            if url == '':
+            if url == '':  # local links
                 cdn_name = ''
+
             else:
                 cdn_name = find_cdn_by_url(url)
 
@@ -71,16 +74,25 @@ def find_cdn_by_counting_url(site):
                     #    #split at last '.' before cdn (regex is better for this)
                     #    url_r = url[::-1]
                     #    cdn_name = ''.join(url.partition('.ndc')[1:])
+
                     if 'cdn' in url:
+                        # domain itself contains the cdn word
                         parts = url.split('.')
                         for i in range(len(parts)):
                             if 'cdn' in parts[i]:
                                 break
                         cdn_name = '.'.join(parts[i:])
+
+                    #TODO very simple logic - change to use url_count
+                    # say if url_cnt/sum_url_cnt > 1/5 then cdn_name = url since 1/5th of traffic is going there anyway
+                    # eg: rgstatic.net and researchgate.net will be separated here while rgstatic.net will be ignored
                     elif site in url:
                         cdn_name = ''  # local site resources and links
                     else:
-                        cdn_name = '?'  # unknown external links
+                        if url_cnt > sum_url_cnt/5.0:
+                            cdn_name = url
+                        else:
+                            cdn_name = '?'  # unknown external links
 
             cdn_cnt[cdn_name] += url_cnt
 
