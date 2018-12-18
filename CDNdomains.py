@@ -19,6 +19,7 @@
 # add .media-amazon.com:"Amazon AWS" and fix ssl-images-amazon.com to AWS
 # TO ADD .twitchcdn.net: Fastly
 # remove KT, SKY from cdn_names as comparison was causing errors due to partial matches
+# replace Instartlogic by Instart Logic for better matches on whois
 
 #cdn_domain = cdnFinder + github_cdn_List
 
@@ -85,8 +86,8 @@ cdn_domains = {
   ".hiberniacdn.com":"HiberniaCDN",
   ".hwcdn.net":"Highwinds",
   ".incapdns.net":"Incapsula",
-  ".inscname.net":"Instartlogic",
-  ".insnw.net":"Instartlogic",
+  ".inscname.net":"Instart Logic",
+  ".insnw.net":"Instart Logic",
   ".internapcdn.net":"Internap",
   ".kxcdn.com":"KeyCDN",
   ".lswcdn.net":"LeaseWeb CDN",
@@ -145,8 +146,8 @@ cdn_domains = {
   ".googleusercontent.com":"Google",
   ".googlehosted.com":"Google",
   ".gstatic.com":"Google",
-  ".insnw.net":"Instartlogic",
-  ".inscname.net":"Instartlogic",
+  ".insnw.net":"Instart Logic",
+  ".inscname.net":"Instart Logic",
   ".internapcdn.net":"Internap",
   ".cloudfront.net":"Amazon CloudFront",
   ".netdna-cdn.com":"MaxCDN",
@@ -237,6 +238,7 @@ cdn_domains = {
 
 # for checking whois Organizations
 # add Amazon.com, Inc., Amazon Technologies Inc. for sites on amazon aws (may not be on cloudfront)
+# remove Instart only keep Instart Logic for better matches on whois
 cdn_names = [
   'AAPT',
   'ARA Networks',
@@ -298,7 +300,6 @@ cdn_names = [
   'Huawei',
   'Incapsula',
   'IneoQuest',
-  'Instart',
   'Instart Logic',
   'Interferex',
   'Internap',
