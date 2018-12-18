@@ -235,6 +235,8 @@ cdn_domains = {
   ".pix-cdn.org":"Advanced Hosters CDN"
 }
 
+# for checking whois Organizations
+# add Amazon.com, Inc., Amazon Technologies Inc. for sites on amazon aws (may not be on cloudfront)
 cdn_names = [
   'AAPT',
   'ARA Networks',
@@ -243,6 +245,7 @@ cdn_names = [
   'Alibaba',
   'Allot Communications',
   'Amazon Technologies Inc.',
+  'Amazon.com, Inc.',
   'Amazon CloudFront',
   'Aryaka',
   'Azure CDN',
