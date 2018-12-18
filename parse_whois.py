@@ -65,3 +65,39 @@ def searchEmail(whoisdata):
                         Email.append(email)
 
     return Email
+
+
+def main():
+    """Test function"""
+
+    import json
+    from CDNdomains import cdn_domains, cdn_names
+    all_cdn_names = list(set(cdn_names + list(cdn_domains.values())))
+
+    site_to_IP = json.load(open('output/site_to_IP.json', 'r'))
+    for site, IP in site_to_IP.items():
+
+        whois1 = loadwhoisIP(site)
+        Org1 = searchOrg(whois1)
+        Email = searchEmail(whois1)
+
+        whois2 = loadwhoisIP(site)
+        Org2 = searchOrg(whois2)
+
+        print("\twhois " + site + " | ", end="")
+        print(Org1, end=" | ")
+        print(Org2)
+
+        i = 0       # count and print all matches while testing
+        for org in list( set(Org1+Org2) ):
+            for cdn in all_cdn_names:
+                if (org.lower() in cdn.lower()) or (cdn.lower() in org.lower()):
+                    print(site + "cdn match "+str(i)+" : " + cdn)
+                    i += 1
+        print()
+    return
+
+
+if __name__ == '__main__':
+
+    main()
