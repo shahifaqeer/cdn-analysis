@@ -1,6 +1,7 @@
 from collections import Counter
 from bs4 import BeautifulSoup
-import urllib
+#import urllib
+import urllib.parse
 import os
 # import re
 
@@ -95,3 +96,19 @@ def fetch_homepage_url_count(site):
     del cnt[None]  # remove empty src NOT local src
 
     return cnt.most_common()
+
+
+def main():
+    """test func"""
+
+    site = 'facebook.com'
+    cnt = fetch_homepage_url_count(site)
+
+    print(site)
+    print(cnt)
+    return
+
+
+if __name__ == '__main__':
+
+    main()
