@@ -31,7 +31,7 @@ def loadwhoissite(site):
 def searchOrg(whoisdata):
     """ returns list of organization names """
     Org = []
-    OrgKeywords = ['organisation:', 'org:', 'organization:', 'org-name:', 'orgname:']
+    OrgKeywords = ['organisation:', 'org:', 'organization:', 'org-name:', 'orgname:', 'netname:']
     exclude_orgs = [e.lower() for e in ['AFRINIC', 'APNIC', 'ARIN', 'LACNIC', 'IANA',
                                         'Asia Pacific Network Information Centre', 'Administered by RIPE NCC',
                                         'RIPE NCC',
