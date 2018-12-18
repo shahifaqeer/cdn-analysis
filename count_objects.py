@@ -101,7 +101,7 @@ def fetch_homepage_url_count(site):
 def main():
     """test func"""
 
-    site = 'facebook.com'
+    site = 'researchgate.net'
     cnt = fetch_homepage_url_count(site)
 
     print(site)
