@@ -27,7 +27,7 @@ def fetch_url(rank, url):
         result['rank'] = rank                           # adding rank later to make future merges easier
         result['timestamp'] = time.time()               # add timestamp for plotting
 
-        if result['response_code'] != "200":
+        if (result['response_code'] != "200") or (result['response_code'] != 200):
             print("Rank %s site %r fetched with response code %r in %ss"
                   % (rank, url, result['response_code'], result['time_total']))
 
@@ -52,8 +52,9 @@ def load_urls(websites, nwebsites=500):
 def main():
 
     list_of_websites = 'data/top-1m-new.csv'  # location of alexa top websites as RANK,SITE\n
-    nwebsites = 25     # top 500 websites default
-    count = 20         # count loops of curl requests
+    #list_of_websites = 'data/test_bad_sites.csv'
+    nwebsites = 500     # top 500 websites default
+    count = 100         # count loops of curl requests
     nthreads = 25       # number of parallel threads for same url default 20
 
     # check for output directory to save files
