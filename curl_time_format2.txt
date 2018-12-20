@@ -1,5 +1,6 @@
 {\n
 "response_code" : "%{response_code}",\n
+"url_effective": "%{url_effective}",\n
 "size_request": %{size_request},\n
 "size_upload": %{size_upload},\n
 "size_download": %{size_download},\n
