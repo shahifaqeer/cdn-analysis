@@ -4,6 +4,7 @@ import json
 from collections import defaultdict
 import multiprocessing
 import time
+import re
 from random import randint
 import os
 #import numpy as np
@@ -18,15 +19,17 @@ def fetch_url(rank, url):
     """
     try:
         p = subprocess.Popen(['curl', '-L', '--connect-timeout', '5.0', '-m', '10.0', '-o', '/dev/null',
-                              '-w', '@curl_time_format.txt', '-s', url], stdout=subprocess.PIPE)
+                              '-w', '@curl_time_format.txt', '-s', url], stdout=subprocess.PIPE,
+                             universal_newlines=True)       #universal newlines no more byte format so no decoding
         out, err = p.communicate()
-        result = json.loads(out.decode('UTF-8'))
-        result['rank'] = rank       # adding rank later to make future merges easier
-        result['timestamp'] = time.time()
+        #out = re.sub(r'(\d+),(\d+)', r'\1.\2', out)     # in case , used instead of decimal
+        result = json.loads(out)
+        result['rank'] = rank                           # adding rank later to make future merges easier
+        result['timestamp'] = time.time()               # add timestamp for plotting
 
         if result['response_code'] != "200":
-            print("Rank %s site %r (%r) fetched with response code %r in %ss"
-                  % (rank, url, result['url_effective'], result['response_code'], result['time_total']))
+            print("Rank %s site %r fetched with response code %r in %ss"
+                  % (rank, url, result['response_code'], result['time_total']))
 
     except Exception as e:
         print("Error fetching %r: Exception %s" % (url, e))
@@ -48,9 +51,9 @@ def load_urls(websites, nwebsites=500):
 
 def main():
 
-    list_of_websites = 'top-1m-new.csv'  # location of alexa top websites as RANK,SITE\n
-    nwebsites = 500     # top 500 websites default
-    count = 100         # count loops of curl requests
+    list_of_websites = 'data/top-1m-new.csv'  # location of alexa top websites as RANK,SITE\n
+    nwebsites = 25     # top 500 websites default
+    count = 20         # count loops of curl requests
     nthreads = 25       # number of parallel threads for same url default 20
 
     # check for output directory to save files
@@ -80,7 +83,7 @@ def main():
             if res is not None:
                 [data[key].append(res[key]) for key in res.keys()]
 
-    savefile = 'output/curl-timing-data-reorder-count%s-sites%s.json' %(count, nwebsites)
+    savefile = 'output/curl-timing-data-count%s-sites%s.json' %(count, nwebsites)
     with open(savefile, 'w') as outfile:
         json.dump(data, outfile)
 
