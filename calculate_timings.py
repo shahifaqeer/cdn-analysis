@@ -88,14 +88,14 @@ def calculate_sizes(df):
 
 def main():
 
-    df = pd.read_json('output/curl-timing-data-reorder-count100-sites500.json')
+    df = pd.read_json('output/curl-timing-data-count100-sites500.json')
 
     calculate_sizes(df)
     calculate_timings(df)
 
     print(df.head())
 
-    df.to_pickle('output/df_timing.pkl')
+    df.to_pickle('output/df_timing_count100-sites500.pkl')
     return
 
 
