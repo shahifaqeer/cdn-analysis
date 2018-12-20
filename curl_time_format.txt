@@ -1,10 +1,10 @@
 {\n
-"response_code" : %{response_code},\n
+"response_code" : "%{response_code}",\n
 "size_request": %{size_request},\n
 "size_upload": %{size_upload},\n
 "size_download": %{size_download},\n
 "size_header": %{size_header},\n
-"url_effective": %{url_effective},\n
+"url_effective": "%{url_effective}",\n
 "time_redirect": %{time_redirect},\n
 "time_namelookup": %{time_namelookup},\n
 "time_connect": %{time_connect},\n
