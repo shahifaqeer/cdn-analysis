@@ -22,6 +22,7 @@ def fetch_url(rank, url):
         out, err = p.communicate()
         result = json.loads(out.decode('UTF-8'))
         result['rank'] = rank       # adding rank later to make future merges easier
+        result['timestamp'] = time.time()
 
         if result['response_code'] != "200":
             print("Rank %s site %r (%r) fetched with response code %r in %ss"
