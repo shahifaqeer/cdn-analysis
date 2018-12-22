@@ -9,25 +9,28 @@ def get_tcp_conn_time(d):
     return d['time_connect'] - d['time_namelookup']
 
 
-# def get_ssl_handshake_time(t_aconn, t_conn):
-#    if t_aconn == 0:    # no ssl was used
-#        return 0
-#    return t_aconn - t_conn
-
-
 def get_ssl_handshake_time(d):
-    t_ssl = d['time_appconnect'] - d['time_connect']
-    if t_ssl <= 0:  # no ssl was used
+    if d['time_appconnect'] == 0:
         return 0
-    return t_ssl
+    return d['time_appconnect'] - d['time_connect']
+
+#def get_ssl_handshake_time(d):
+#    t_ssl = d['time_appconnect'] - d['time_connect']
+#    if t_ssl <= 0:  # no ssl was used
+#        return 0
+#    return t_ssl
 
 
-def get_time_to_first_byte(d):
-    return d['time_starttransfer']  # - d['time_pretransfer']
+def get_client_calculation_time(d):
+    return d['time_pretransfer'] - d['time_appconnect']
 
 
 def get_time_to_wait(d):
     return d['time_starttransfer'] - d['time_pretransfer']
+
+
+def get_time_to_first_byte(d):
+    return d['time_starttransfer']  # - d['time_pretransfer']
 
 
 def get_data_receive_time(d):
@@ -63,13 +66,18 @@ def calculate_timings(df):
 
     df['t_dns'] = df.apply(get_dns_res_time, axis=1)
 
+    df['t_tcp'] = df.apply(get_tcp_conn_time, axis=1)
+
     df['t_ssl'] = df.apply(lambda r: get_ssl_handshake_time(r), axis=1)
 
     df['ssl_flag'] = df['t_ssl'] != 0
 
-    df['t_fbyte'] = df.apply(get_time_to_first_byte, axis=1)
+    df['t_calc'] = df.apply(get_client_calculation_time, axis=1)
 
     df['t_wait'] = df.apply(get_time_to_wait, axis=1)
+
+    df['t_fbyte'] = df.apply(get_time_to_first_byte, axis=1)
+    #df['t_fbyte'] = df['time_starttransfer']
 
     df['t_rx'] = df.apply(get_data_receive_time, axis=1)
 
@@ -88,7 +96,7 @@ def calculate_sizes(df):
 
 def main():
 
-    df = pd.read_json('output/curl-timing-data-count100-sites500.json')
+    df = pd.read_json('output/curl-timing-data-no_redirects-count100-sites500.json')
 
     calculate_sizes(df)
     calculate_timings(df)
