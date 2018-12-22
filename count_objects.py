@@ -76,7 +76,7 @@ def count_netlocs(data):
     return Counter(netlocs_static)
 
 
-def fetch_homepage_url_count(site):
+def get_homepage_url_count(site):
     """counts url static resources in homepage
     input: site
     output: {url:count} in order where url is the base url from resources on homepage"""
@@ -102,7 +102,7 @@ def main():
     """test func"""
 
     site = 'researchgate.net'
-    cnt = fetch_homepage_url_count(site)
+    cnt = get_homepage_url_count(site)
 
     print(site)
     print(cnt)
