@@ -18,7 +18,8 @@ def fetch_url(rank, url):
     variable explanations: https://ec.haxx.se/usingcurl-verbose.html
     """
     try:
-        p = subprocess.Popen(['curl', '-L', '--connect-timeout', '5.0', '-m', '10.0', '-o', '/dev/null',
+        #remove -L redirects as it messes up all timings esp ssl based due to multiple redirs
+        p = subprocess.Popen(['curl', '--connect-timeout', '5.0', '-m', '10.0', '-o', '/dev/null',
                               '-w', '@curl_time_format.txt', '-s', url], stdout=subprocess.PIPE,
                              universal_newlines=True)       #universal newlines no more byte format so no decoding
         out, err = p.communicate()
@@ -27,7 +28,7 @@ def fetch_url(rank, url):
         result['rank'] = rank                           # adding rank later to make future merges easier
         result['timestamp'] = time.time()               # add timestamp for plotting
 
-        if (result['response_code'] != "200") or (result['response_code'] != 200):
+        if (result['response_code'] != '200') and (result['response_code'] != 200):
             print("Rank %s site %r fetched with response code %r in %ss"
                   % (rank, url, result['response_code'], result['time_total']))
 
@@ -84,7 +85,7 @@ def main():
             if res is not None:
                 [data[key].append(res[key]) for key in res.keys()]
 
-    savefile = 'output/curl-timing-data-count%s-sites%s.json' %(count, nwebsites)
+    savefile = 'output/curl-timing-data-no_redirects-count%s-sites%s.json' %(count, nwebsites)
     with open(savefile, 'w') as outfile:
         json.dump(data, outfile)
 
