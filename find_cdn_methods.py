@@ -3,9 +3,11 @@ import json
 from collections import defaultdict
 
 from CDNdomains import cdn_domains, cdn_names
-from count_objects import fetch_homepage_url_count
+from count_objects import get_homepage_url_count
 import parse_whois
 
+major_cdns = ['Fastly', 'Cloudflare', 'CloudFront', 'Akamai', 'Alibaba', 'Google LLC']
+all_cdn_names = list(set(cdn_names + list(cdn_domains.values())))
 
 def find_cdn_by_site(site):
     """
@@ -43,7 +45,7 @@ def find_cdn_by_url(url):
 
 def find_cdn_by_counting_url(site):
     """finds probable cdn based on most count of url static resources"""
-    cnt = fetch_homepage_url_count(site)
+    cnt = get_homepage_url_count(site)
     cdn_cnt = defaultdict(int)
 
     """save data"""
@@ -68,7 +70,7 @@ def find_cdn_by_counting_url(site):
 
                 if not (cdn_name):
                     # if '.cdn' in url:
-                    #    #split at first occurance of 'cdn' and print everything after
+                    #    #split at first occurrence of 'cdn' and print everything after
                     #    cdn_name = ''.join(url.partition('.cdn')[1:])  # unknown CDN to be resolved later
                     # elif 'cdn.' in url:
                     #    #split at last '.' before cdn (regex is better for this)
@@ -104,7 +106,7 @@ def find_cdn_by_counting_url(site):
         temp_data['url_cnt'] = cdn_cnt_sorted
         """end save"""
 
-        # remove "?" as option
+        # remove "?" as option --> random external link with not enough (1/5th) traffic
         cdn_cnt_filtered = [i for i in cdn_cnt_sorted if i[0] != '?']
 
         if len(cdn_cnt_filtered) > 0:
@@ -128,10 +130,12 @@ def find_cdn_by_counting_url(site):
                         probable_cdn = cdn_cnt_filtered[i][0]
                         break
 
-                    if probable_cdn in ['Google', 'Facebook', 'Twitter', 'Amazon CloudFront']:
+                    if probable_cdn in major_cdns:
                         # if num famous url is high but can't compare with other links
-                        if (cdn_cnt_filtered[i][1] >= sum_cdn_links / 5):
+                        # same logic 1/5 traffic but this time only compare with local links + potential CDNs no external
+                        if (cdn_cnt_filtered[i][1] >= sum_cdn_links / 5.):
                             # 1/10 was arbitarily decided but surprisingly was the threshold for deciding whatsapp, stackoverflow
+                            # even if it is local, break loop and return
                             break
                         else:
                             # if links to Google etc much less than sum then set back to first element regardless of ''
@@ -162,7 +166,7 @@ def find_cdn_by_counting_url(site):
 
 
 def find_cdn_by_whois_org(site):
-    all_cdn_names = list(set(cdn_names + list(cdn_domains.values())))
+
 
     whois1 = parse_whois.loadwhoisIP(site)
     Org1 = parse_whois.searchOrg(whois1)
@@ -191,7 +195,6 @@ def find_cdn_by_whois_org(site):
 
 
 def find_cdn_by_whois_site(site):
-    all_cdn_names = list(set(cdn_names + list(cdn_domains.values())))
 
     whois2 = parse_whois.loadwhoissite(site)
     Org2 = parse_whois.searchOrg(whois2)
@@ -244,7 +247,7 @@ def main():
             # by matching whois organization
             cdn_whois = find_cdn_by_whois_org(site)
 
-            if cdn_whois in ['Fastly', 'Cloudflare', 'Akamai', 'Alibaba', 'Google LLC']:
+            if cdn_whois in major_cdns:
                 # google cloud customers have 'Google LLC' in whois
                 matching_cdn = cdn_whois
             else:
@@ -259,8 +262,8 @@ def main():
                 #    return False
         return matching_cdn
 
-    site_to_IP = json.load(open('output/site_to_IP.json', 'r'))
-    for site_name, IP in site_to_IP.items():
+    site_to_ip = json.load(open('output/site_to_ip.json', 'r'))
+    for site_name, IP in site_to_ip.items():
         probable_cdn = find_cdn2(site_name)
         print(site_name, IP, probable_cdn)
 
