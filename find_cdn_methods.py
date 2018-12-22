@@ -169,9 +169,7 @@ def find_cdn_by_whois_org(site):
     # Email = parse_whois.searchEmail(whois1)
 
     """save data"""
-    temp_data = {}
-    temp_data['site'] = site
-    temp_data['organization'] = Org1
+    temp_data = {'site': site, 'organization': Org1}
     """end save"""
 
     print("\twhois " + site + " | ", end="")
