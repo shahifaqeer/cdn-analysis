@@ -1,10 +1,6 @@
 import pandas as pd
 from find_cdn_methods import *
-from CDNdomains import cdn_domains, cdn_names
 
-
-major_cdns = ['Fastly', 'Cloudflare', 'CloudFront', 'Akamai', 'Alibaba', 'Google']
-all_cdn_names = list(set(cdn_names + list(cdn_domains.values())))
 site_cdn_method_map = defaultdict(list)
 
 
@@ -34,8 +30,6 @@ def cdn_parse_whois(site):
 def estimate_cdn(site, cdn_parsed, cdn_whois, prioritize_whois=False):
     """logic to decide which CDN finally - prioritizes parsed based detection instead of whois records
     if prioritize_whois is set to True, then if cdn_whois is a famous well known CDN, it is returned"""
-
-    global all_cdn_names
 
     if prioritize_whois and cdn_whois in major_cdns:
         # in case ip has this whois, regardless of static resources return this info
