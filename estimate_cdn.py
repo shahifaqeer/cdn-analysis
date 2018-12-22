@@ -3,6 +3,7 @@ from find_cdn_methods import *
 from CDNdomains import cdn_domains, cdn_names
 
 
+major_cdns = ['Fastly', 'Cloudflare', 'CloudFront', 'Akamai', 'Alibaba', 'Google']
 all_cdn_names = list(set(cdn_names + list(cdn_domains.values())))
 site_cdn_method_map = defaultdict(list)
 
@@ -30,17 +31,18 @@ def cdn_parse_whois(site):
     return matching_cdn
 
 
-def estimate_cdn(site, cdn_parsed, cdn_whois):
-    """logic to decide which CDN finally - prioritizes parsed based detection instead of whois records"""
-
-    # if cdn_whois in ['Fastly', 'Cloudflare', 'CloudFront', 'Akamai', 'Alibaba', 'Google', 'Amazon']:
-    #    matching_cdn = cdn_whois
-    # if asname in all_valid_cdn_names:
-    #    return asname
+def estimate_cdn(site, cdn_parsed, cdn_whois, prioritize_whois=False):
+    """logic to decide which CDN finally - prioritizes parsed based detection instead of whois records
+    if prioritize_whois is set to True, then if cdn_whois is a famous well known CDN, it is returned"""
 
     global all_cdn_names
 
-    if cdn_parsed and cdn_whois:  # confusion case when both exist
+    if prioritize_whois and cdn_whois in major_cdns:
+        # in case ip has this whois, regardless of static resources return this info
+        # usually set to false since we want to prioritize static resources based CDN over whois data
+        matching_cdn = cdn_whois
+
+    elif cdn_parsed and cdn_whois:  # confusion case when both exist
         if cdn_parsed in all_cdn_names:
             # known CDN not an unknown url
             matching_cdn = cdn_parsed
@@ -69,9 +71,35 @@ def estimate_cdn(site, cdn_parsed, cdn_whois):
 
 def main():
 
-    df_data = pd.read_pickle('output/df_data.json')
+    print("Reading file: 'output/df_data.json'\n")
+    df_data = pd.read_json('output/df_data.json')
+    df_valid = df_data[df_data['ip']!=False].copy()
 
-    df_valid = df_sites[df_sites['IP'] != False].copy()
+    print("Number of sites loaded: %s" % (len(df_data)))
+    print("Number of valid sites for further analysis: %s\n" % (len(df_valid)))
+    print("List of blocked sites: %s" % list(df_data[df_data['ip']==False]['site']))
+
     df_valid['cdn_parsed'] = df_valid['site'].apply(cdn_parse_site)
     df_valid['cdn_whois'] = df_valid['site'].apply(cdn_parse_whois)
     df_valid['cdn'] = False
+
+    df_valid['cdn'] = df_valid.apply(lambda row:
+                                     estimate_cdn(row['site'], row['cdn_parsed'], row['cdn_whois'], False),
+                                     axis=1)
+
+    df_url_cdn_whois_map = pd.DataFrame(site_cdn_method_map)
+    df_url_cdn_whois_map.to_pickle('output/df_url_cdn_whois_map.pkl')
+
+    df_valid.to_pickle('output/df_ip_asn_cdn.pkl')
+
+    print("\n\nCreating pandas dataframe file: 'output/df_url_cdn_whois_map.pkl")
+    print("Creating pandas dataframe file: 'output/df_ip_asn_cdn.pkl")
+
+    return
+
+
+if __name__ == '__main__':
+
+    main()
+
+
