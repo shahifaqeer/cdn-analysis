@@ -251,7 +251,8 @@ cdn_names = [
   'Allot Communications',
   'Amazon Technologies Inc.',
   'Amazon.com, Inc.',
-  'Amazon CloudFront',
+  'Amazon Data Services',
+  'CloudFront',
   'Aryaka',
   'Azure CDN',
   'BT',
@@ -372,7 +373,7 @@ cdn_names = [
   'Webscale',
   'Yottaa'
 ]
-  
+
 manual_inspection = {
 	"clara.net":{'name': 'clara', 'label': ['cloud']},
 	"apsalar.com":{'name':'apsalar', 'label': ['cloud']},
