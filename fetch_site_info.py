@@ -3,11 +3,13 @@ import os
 import subprocess
 import json
 import socket
+from collections import defaultdict
 from itertools import islice
+from cymruwhois import Client
 
 
-def load_sites(path_to_alexa_list = 'top-1m-new.csv', nwebsites = 500):
-    """"""
+def load_sites(path_to_alexa_list='data/top-1m-new.csv', nwebsites=500):
+    """return rank_to_sites dictionary"""
     sites = {}
     with open(path_to_alexa_list) as f:
         for line in islice(f, nwebsites):
@@ -27,8 +29,38 @@ def get_ip(s):
         else:
             return ip
     except Exception as e:
-        print("Error accessing site "+s)
+        print("Error getting IP address of site "+s)
         return False
+
+
+def load_site_to_ip(sites, dfile="output/site_to_ip.json"):
+    """load or create site_to_ip dictionary
+    preloaded dictionary for 480 sites with valid lookups for 480 sites dfile = output/site_to_ip.json"""
+    if os.path.exists(dfile):
+        with open(dfile, 'r') as fin:
+            site_to_ip = json.load(fin)
+    else:
+        site_to_ip = {}
+        for rank, site in sites.items():
+            ip = get_ip(site)   # use sockets to get IP addresses for sites
+            if ip:
+                site_to_ip[site] = ip
+        with open(dfile, 'w') as fout:
+            json.dump(site_to_ip, fout)
+    return site_to_ip
+
+
+def get_asn(ip):
+    """use cymruwhois by default instead of pyasn
+    input ip address as string, return ASN and AS owner"""
+    if ip:
+        c = Client()
+        try:
+            r = c.lookup(ip)
+            return r.asn, r.owner
+        except Exception as e:
+            print("Error finding ASN for "+ip)
+    return False, False
 
 
 def save_site(site):
@@ -89,6 +121,16 @@ def save_whois(site, IP):
     return True
 
 
+def save_pages_offline(site_to_ip):
+    """save whois and homepage offline for analysis"""
+    for site, IP in site_to_ip.items():
+        save_site(site)
+        save_whois(site, IP)
+        save_whois(site, site)
+        print('.', end="")
+    return
+
+
 def main():
 
     # check for output directory to save files
@@ -101,24 +143,27 @@ def main():
     if not os.path.exists('output/whoissite'):
         os.makedirs('output/whoissite')
 
-    sites = load_sites()    #top 500 alexa sites as a dictionary {rank: site}
+    sites = load_sites()        #top 500 alexa sites as a dictionary {rank: site}
+    site_to_ip = load_site_to_ip(sites)
 
-    # load site_to_ip dictionary
-    dfile = "output/site_to_IP.json"    # preloaded dictionary for 480 sites with valid lookups
-    if os.path.exists(dfile):
-        with open(dfile, 'r') as fin:
-            site_to_ip = json.load(fin)
-    else:
-        site_to_ip = {}
-        for rank, site in sites.items():
-            ip = get_ip(site)   # use sockets to get IP addresses for sites
-            if ip:
-                site_to_ip[site] = ip
+    save_pages_offline(site_to_ip)
 
-    for site, IP in site_to_ip.items():
-        save_site(site)
-        save_whois(site, IP)
-        save_whois(site, site)
+    # save dataframe as json for analysis
+    df_data = defaultdict(list)
+    for rank, site in sites.items():
+        df_data['rank'].append(rank)
+        df_data['site'].append(site)
+        ip = get_ip(site)
+        df_data['ip'].append(ip)
+        asn, asname = get_asn(ip)
+        df_data['asn'].append(asn)
+        df_data['asname'].append(asname)
+
+    dfile = 'output/df_data.json'
+    with open(dfile, 'w') as fout:
+        json.dump(df_data, fout)
+    print("Saved IP, ASN info in "+dfile)
+    return
 
 
 if __name__ == '__main__':
