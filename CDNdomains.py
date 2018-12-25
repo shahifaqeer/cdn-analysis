@@ -22,6 +22,7 @@
 # replace Instartlogic by Instart Logic for better matches on whois
 # remove/comment out ".pix-cdn.org":"Advanced Hosters CDN" - txxx.com should be cloudfront based on whois IP
 # replace ".tl88.net":"Akamai China CDN" with just Akamai to avoid confusion
+# add ytimg.com:Google for youtubeimage cdn
 
 #cdn_domain = cdnFinder + github_cdn_List
 
@@ -42,6 +43,7 @@ cdn_domains = {
   ".office365.com":"Microsoft",
   ".nflxext.com":"Open-Connect (Netflix)",
   ".media-amazon.com":"Amazon AWS",
+  ".ytimg.com":"Google",
   ".clients.turbobytes.net":"TurboBytes",
   ".turbobytes-cdn.com":"TurboBytes",
   ".afxcdn.net":"afxcdn.net",
@@ -83,6 +85,7 @@ cdn_domains = {
   ".google.":"Google",
   ".googlesyndication.":"Google",
   ".youtube.":"Google",
+  ".ytimg.com"
   ".googleusercontent.com":"Google",
   ".l.doubleclick.net":"Google",
   ".hiberniacdn.com":"HiberniaCDN",
