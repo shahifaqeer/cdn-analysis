@@ -8,15 +8,15 @@
 # added licdn.com: LinkedIn CDN to host images and media
 # added nflxvideo.net,.nflxext.com : Open-Connect Netflix (https://firebounty.com/104-netflix)
 # added msocdn.com, cdn.office.net: Akamai CDN for microsoft office 365 services (https://www.dns-as.org/support/dns-as-cloud-apps/)
-# added ssl-images-amazon.com: Amazon not Amazon cloudfront, belongs to AS16509 Amazon AWS
+# added ssl-images-amazon.com: Amazon CloudFront
 # redditstatic.com is currently hosted by Fastly, but was previously Cloudfront, and even earlier Akamai. Use whois.
-# added .atlassian.com: Amazon, belongs to AS16509 Amazon AWS
+# added .atlassian.com: Amazon CloudFront, belongs to AS16509 Amazon AWS
 # added .pstatic.net: Akamai, belongs to AS16625 to serve content
 # added .sfdcstatic: Akamai for Salesforce
 # added .cdn.sohucs.com: Sohu CS Media currently hosted by Beijing Media
 # added .office365.com: Akamai although it is auth portal for microsoft office
 # replaced all Akamai Microsoft resources with Microsoft
-# add .media-amazon.com:"Amazon AWS" and fix ssl-images-amazon.com to AWS
+# add .media-amazon.com:"Amazon CloudFront"
 # TO ADD .twitchcdn.net: Fastly
 # remove KT, SKY from cdn_names as comparison was causing errors due to partial matches
 # replace Instartlogic by Instart Logic for better matches on whois
@@ -35,14 +35,14 @@ cdn_domains = {
   ".nflxvideo.net":"Open-Connect (Netflix)",
   ".msocdn.com":"Microsoft",
   ".cdn.office.net":"Microsoft",
-  ".ssl-images-amazon.com":"Amazon AWS",
+  ".ssl-images-amazon.com":"Amazon CloudFront",
   ".atlassian.com":"Amazon CloudFront",
   ".pstatic.net":"Akamai",
   ".sfdcstatic.com":"Akamai",
   ".cdn.sohucs.com":"Sohu",
-  ".office365.com":"Microsoft",
+  ".office365.com":"Microsoft Azure",
   ".nflxext.com":"Open-Connect (Netflix)",
-  ".media-amazon.com":"Amazon AWS",
+  ".media-amazon.com":"Amazon CloudFront",
   ".ytimg.com":"Google",
   ".clients.turbobytes.net":"TurboBytes",
   ".turbobytes-cdn.com":"TurboBytes",
@@ -85,7 +85,6 @@ cdn_domains = {
   ".google.":"Google",
   ".googlesyndication.":"Google",
   ".youtube.":"Google",
-  ".ytimg.com"
   ".googleusercontent.com":"Google",
   ".l.doubleclick.net":"Google",
   ".hiberniacdn.com":"HiberniaCDN",
@@ -113,7 +112,7 @@ cdn_domains = {
   ".gslb.taobao.com":"Taobao",
   ".cdn.bitgravity.com":"Tata communications",
   ".cdn.telefonica.com":"Telefonica",
-  ".vo.msecnd.net":"Windows Azure",
+  ".vo.msecnd.net":"Microsoft Azure",
   ".ay1.b.yahoo.com":"Yahoo",
   ".yimg.":"Yahoo",
   ".zenedge.net":"Zenedge",
@@ -168,7 +167,7 @@ cdn_domains = {
   ".wscloudcdn.com":"ChinaNetCenter",
   ".ourwebpic.com":"ChinaNetCenter",
   ".att-dsa.net":"AT&T",
-  ".vo.msecnd.net":"Windows Azure",
+  ".vo.msecnd.net":"Microsoft Azure",
   ".azureedge.net":"Microsoft Azure",
   ".voxcdn.net":"VoxCDN",
   ".bluehatnetwork.com":"Blue Hat Network",
