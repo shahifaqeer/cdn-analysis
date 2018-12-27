@@ -8,6 +8,8 @@ import re
 from random import randint
 import os
 #import numpy as np
+from fetch_site_info import load_sites
+import CONST
 
 
 def fetch_url(rank, url):
@@ -38,35 +40,23 @@ def fetch_url(rank, url):
     return result
 
 
-def load_urls(websites, nwebsites=500):
-    """get top 500 of alexa websites csv <RANK, SITE> and append with 'https://www.' for curl request"""
-    urls = {}
-    from itertools import islice
-    with open(websites) as f:
-        for line in islice(f, nwebsites):
-            rank, site = line.strip().split(',')
-            url = 'https://www.' + site + '/'
-            urls[int(rank)] = url
-    return urls
-
-
-def main():
-
-    list_of_websites = 'data/top-1m-new.csv'  # location of alexa top websites as RANK,SITE\n
-    #list_of_websites = 'data/test_bad_sites.csv'
-    nwebsites = 500     # top 500 websites default
-    count = 100         # count loops of curl requests
-    nthreads = 25       # number of parallel threads for same url default 20
-
-    # check for output directory to save files
-    outdir = 'output/'
-    if not os.path.exists(outdir):
-        os.makedirs(outdir)
-
-    data = defaultdict(list)    # save result as json and load in pandas for averaging and analysis
-    urls = load_urls(list_of_websites, nwebsites)
+def parallel_requests(list_of_websites=CONST.list_of_websites,
+                      nwebsites=CONST.nwebsites,
+                      nthreads=CONST.nthreads,
+                      count=CONST.count):
+    """
+    parallel curl requests distributed among limited threads with 10-30s random time between subsequent loops
+    :param list_of_websites: path to top-1m.csv
+    :param nwebsites: 500
+    :param nthreads: 25
+    :param count: 100
+    :return:
+    """
+    sites = load_sites(list_of_websites, nwebsites)
+    urls = {rank:'https://www.' + site + '/' for rank, site in sites.items()}
     rank_url_tuples = list(urls.items())
-    #print(rank_url_tuples)
+
+    data = defaultdict(list)  # save result as json and load in pandas for averaging and analysis
 
     for i in range(count):
 
@@ -85,9 +75,43 @@ def main():
             if res is not None:
                 [data[key].append(res[key]) for key in res.keys()]
 
-    savefile = 'output/curl-timing-data-no_redirects-count%s-sites%s.json' %(count, nwebsites)
+    return data
+
+
+def save_curl_timings_data(data):
+    savefile = CONST.curl_timing_data_json
     with open(savefile, 'w') as outfile:
         json.dump(data, outfile)
+    print("Save curl timing data to %s" % (savefile))
+    return
+
+
+def load_urls(websites, nwebsites=500):
+    """get top 500 of alexa websites csv <RANK, SITE> and append with 'https://www.' for curl request"""
+    urls = {}
+    from itertools import islice
+    with open(websites) as f:
+        for line in islice(f, nwebsites):
+            rank, site = line.strip().split(',')
+            url = 'https://www.' + site + '/'
+            urls[int(rank)] = url
+    return urls
+
+
+def main():
+
+    list_of_websites = CONST.list_of_websites
+    nwebsites = CONST.nwebsites
+    count = CONST.count
+    nthreads = CONST.nthreads
+    data = parallel_requests(list_of_websites, nwebsites, nthreads, count)
+
+    # check for output directory to save files
+    outdir = 'output/'
+    if not os.path.exists(outdir):
+        os.makedirs(outdir)
+
+    save_curl_timings_data(data)
 
     return
 
