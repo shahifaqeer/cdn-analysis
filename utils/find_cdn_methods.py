@@ -2,9 +2,9 @@ import os
 import json
 from collections import defaultdict
 
-from CDNdomains import cdn_domains, cdn_names
-from count_objects import get_homepage_url_count
-import parse_whois
+from utils.CDNdomains import cdn_domains, cdn_names
+from utils.count_objects import get_homepage_url_count
+from utils import parse_whois
 
 major_cdns = ['Fastly', 'Cloudflare', 'CloudFront', 'Akamai', 'Alibaba', 'Google LLC']
 all_cdn_names = list(set(cdn_names + list(cdn_domains.values())))

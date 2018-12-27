@@ -71,7 +71,7 @@ def main():
     """Test function"""
 
     import json
-    from CDNdomains import cdn_domains, cdn_names
+    from utils.CDNdomains import cdn_domains, cdn_names
     all_cdn_names = list(set(cdn_names + list(cdn_domains.values())))
 
     site_to_IP = json.load(open('output/site_to_IP.json', 'r'))
