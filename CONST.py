@@ -1,8 +1,8 @@
 list_of_websites = 'data/top-1m-new.csv'                # location of alexa top websites as RANK,SITE\n
 # list_of_websites = 'data/test_bad_sites.csv'
 nwebsites = 500                                         # top 500 websites default
-count = 1                                             # count loops of curl requests
-nthreads = 2                                           # number of parallel threads for same url default 25
+count = 100                                             # count loops of curl requests default 100
+nthreads = 25                                           # number of parallel threads for same url default 25
 
 # these IPs are returned for block sites. Change this list to empty at another location
 ips_blocked_by_ISP = ['49.207.46.6', '49.207.46.24', '49.207.46.34']
