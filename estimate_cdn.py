@@ -2,12 +2,14 @@ from __future__ import division
 import urllib.parse
 from bs4 import BeautifulSoup
 from collections import defaultdict, Counter
-import os, re
+import os
+import re
 import pickle as pkl
 import pandas as pd
 
 from utils import parse_whois
 from utils.CDNdomains import cdn_domains, cdn_names
+import CONST
 
 
 def split_before(pattern, text):
@@ -257,9 +259,9 @@ class CDN:
 
 def main():
     from fetch_site_info import load_sites
-    nwebsites = 500
 
-    rank_to_site = load_sites("data/top-1m-new.csv", )
+    rank_to_site = load_sites(CONST.list_of_websites, CONST.nwebsites)
+
     cdn = {}
     data = defaultdict(list)
 
@@ -281,13 +283,13 @@ def main():
         data['cdn.xcache'].append(c.cdn_by_xcache)
         data['cdn.cname'].append(c.cdn_by_cname)
 
-    foutpath = "results/CDN_data_object.pkl"
-    print("Save CDN class data for top %s sites to %s" %(nwebsites, foutpath))
+    foutpath = CONST.CDN_data_object_path
+    print("Save complete CDN class data for top %s sites to %s" % (CONST.nwebsites, foutpath))
     pkl.dump(cdn, open(foutpath, "wb"))
 
     df_cdn = pd.DataFrame(data)
-    foutpath2 = "results/df_cdn.pkl"
-    print("Save pandas dataframe with site, cdn using all available methods to %s" % (foutpath2))
+    foutpath2 = CONST.df_cdn_filepath
+    print("Save pandas dataframe df_cdn with [site, cdn] using all available methods to %s" % (foutpath2))
     df_cdn.to_pickle(foutpath2)
 
     return
