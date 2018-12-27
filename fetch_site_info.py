@@ -3,12 +3,15 @@ import os
 import subprocess
 import json
 import socket
+import pandas as pd
 from collections import defaultdict
 from itertools import islice
 from cymruwhois import Client
 
+import CONST
 
-def load_sites(path_to_alexa_list='data/top-1m-new.csv', nwebsites=500):
+
+def load_sites(path_to_alexa_list='data/top-1m-new.csv', nwebsites=CONST.nwebsites):
     """return rank_to_sites dictionary"""
     sites = {}
     with open(path_to_alexa_list) as f:
@@ -23,7 +26,7 @@ def get_ip(s):
     try:
         ip = socket.gethostbyname(s)
         # ISP blocked domains return IP 49.207.46.6, 49.207.46.24, 49.207.46.34 from edge routers
-        if ip in ['49.207.46.6', '49.207.46.24', '49.207.46.34']:
+        if ip in CONST.ips_blocked_by_ISP:
             print("Blocked site "+s)
             return False
         else:
@@ -33,7 +36,7 @@ def get_ip(s):
         return False
 
 
-def load_site_to_ip(sites, dfile="output/site_to_ip.json"):
+def load_site_to_ip(sites, dfile=CONST.site_to_ip_json):
     """load or create site_to_ip dictionary
     preloaded dictionary for 480 sites with valid lookups for 480 sites dfile = output/site_to_ip.json"""
     if os.path.exists(dfile):
@@ -66,7 +69,6 @@ def get_asn(ip):
 def save_site(site):
     """use requests module to get and save the site homepage"""
 
-    # url = 'http://'+site
     url = 'https://www.' + site + '/'
 
     file = 'output/homepage/' + site
@@ -123,6 +125,14 @@ def save_whois(site, IP):
 
 def save_pages_offline(site_to_ip):
     """save whois and homepage offline for analysis"""
+
+    if not os.path.exists('output/homepage'):
+        os.makedirs('output/homepage')
+    if not os.path.exists('output/whoisIP'):
+        os.makedirs('output/whoisIP')
+    if not os.path.exists('output/whoissite'):
+        os.makedirs('output/whoissite')
+
     for site, IP in site_to_ip.items():
         save_site(site)
         save_whois(site, IP)
@@ -136,17 +146,10 @@ def main():
     # check for output directory to save files
     if not os.path.exists('output'):
         os.makedirs('output')
-    if not os.path.exists('output/homepage'):
-        os.makedirs('output/homepage')
-    if not os.path.exists('output/whoisIP'):
-        os.makedirs('output/whoisIP')
-    if not os.path.exists('output/whoissite'):
-        os.makedirs('output/whoissite')
 
-    sites = load_sites()        #top 500 alexa sites as a dictionary {rank: site}
-    site_to_ip = load_site_to_ip(sites)
-
-    save_pages_offline(site_to_ip)
+    print("Load %s sites from %s" % (CONST.nwebsites, CONST.list_of_websites))
+    sites = load_sites(CONST.list_of_websites, CONST.nwebsites)
+    site_to_ip = load_site_to_ip(sites, CONST.ip_asn_json)
 
     # save dataframe as json for analysis
     df_data = defaultdict(list)
@@ -159,10 +162,17 @@ def main():
         df_data['asn'].append(asn)
         df_data['asname'].append(asname)
 
-    dfile = 'output/df_data.json'
+    dfile = CONST.ip_asn_json
     with open(dfile, 'w') as fout:
         json.dump(df_data, fout)
     print("Saved IP, ASN info in "+dfile)
+
+    dfile2 = CONST.df_ip_asn_filepath
+    df_ip_asn = pd.DataFrame(df_data)
+    df_ip_asn.to_pickle(dfile2)
+    print("Saved pandas dataframe df_ip_asn to " + dfile2)
+
+    save_pages_offline(site_to_ip)
 
     return
 
