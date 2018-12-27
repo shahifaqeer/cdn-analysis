@@ -17,7 +17,7 @@ def load_sites(path_to_alexa_list='data/top-1m-new.csv', nwebsites=CONST.nwebsit
     with open(path_to_alexa_list) as f:
         for line in islice(f, nwebsites):
             rank, site = line.strip().split(',')
-            sites[rank] = site
+            sites[int(rank)] = site
     return sites
 
 
