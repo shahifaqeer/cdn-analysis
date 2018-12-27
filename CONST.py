@@ -12,7 +12,7 @@ site_to_ip_json = "output/site_to_ip_%s.json" % (nwebsites)
 ip_asn_json = "output/ip_asn_%s.json" % (nwebsites)
 curl_timing_data_json = "output/curl_timing_count%s_sites%s.json" % (count, nwebsites)
 
-CDN_data_object_path = "output/CDN_data_object_%s.pkl" % (nwebsites)
+CDN_data_object_path = "results/CDN_data_object_%s.pkl" % (nwebsites)
 
 # filepaths for saving dataframes and results
 df_timing_filepath = "results/df_timing.pkl"
