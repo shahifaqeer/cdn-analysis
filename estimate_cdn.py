@@ -6,8 +6,8 @@ import os, re
 import pickle as pkl
 import pandas as pd
 
-import parse_whois
-from CDNdomains import cdn_domains, cdn_names
+from utils import parse_whois
+from utils.CDNdomains import cdn_domains, cdn_names
 
 
 def split_before(pattern, text):
