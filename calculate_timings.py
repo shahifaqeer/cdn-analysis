@@ -1,4 +1,9 @@
+import os
+import json
 import pandas as pd
+
+from utils.curl_timings import parallel_requests, save_curl_timings_data
+import CONST
 
 
 def get_dns_res_time(d):
@@ -96,14 +101,29 @@ def calculate_sizes(df):
 
 def main():
 
-    df = pd.read_json('output/curl-timing-data-no_redirects-count100-sites500.json')
+    list_of_websites = CONST.list_of_websites
+    nwebsites = CONST.nwebsites
+    count = CONST.count
+    nthreads = CONST.nthreads
 
-    calculate_sizes(df)
-    calculate_timings(df)
+    if os.path.exists(CONST.curl_timing_data_json):
+        print("Load curl timing data file %s" % CONST.curl_timing_data_json)
+        with open(CONST.curl_timing_data_json) as fin:
+            curl_json_data = json.load(fin)
+    else:
+        print("Run curl requests to %s sites for %s loops" %(nwebsites, count))
+        curl_json_data = parallel_requests(list_of_websites, nwebsites, nthreads, count)
+        save_curl_timings_data(curl_json_data)
 
-    print(df.head())
+    df_timing = pd.DataFrame(curl_json_data)
+    calculate_sizes(df_timing)
+    calculate_timings(df_timing)
 
-    df.to_pickle('output/df_timing_count100-sites500.pkl')
+    print("Saved calculated df_timing for % sites %s threads %s" \
+          " loops to %s" % (nwebsites, nthreads, count, CONST.df_timing_filepath))
+    print(df_timing.head())
+    df_timing.to_pickle(CONST.df_timing_filepath)
+
     return
 
 
