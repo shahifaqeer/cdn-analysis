@@ -21,7 +21,8 @@ for CDN estimation (details below).
 - Analysis-Timing.ipynb
 
 The current ipython notebook analysis requires df_timing.pkl, df_cdn.pkl,
-and df_asn.pkl in the results/ folder.
+and df_asn.pkl in the results/ folder. A backup of the current results is
+available in results_old/ folder in case data is overwritten.
 
 ## Requirements:
 
