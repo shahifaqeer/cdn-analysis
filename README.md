@@ -6,7 +6,7 @@ for CDN estimation (details below).
 
 ### Execution
 
-`python run.py`
+`python3 run.py`
 - use `CONST.py` to change runtime variables (temporary)
 - creates output/ and results/ folder in code directory
 - ensure data/ directory contains path to alexa top sites csv (rank,site)
@@ -39,7 +39,7 @@ To reproduce timing analysis, copy curl files to the output/ directory and run
 To reproduce cdn estimation, unzip homepage and whoisIP to output/ directory
 and run `estimate_cdn.py`
 
-## Requirements:
+## Requirements
 
 - cymruwhois
 - pandas
