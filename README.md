@@ -2,9 +2,23 @@
 
 This is the repository for Timing Analysis of top Alexa websites grouped by CDN and ASN as required by the Internet Measurement Challenge for ThousandEyes.
 
-The code is basically split into 3 parts: fetching ASN info, estimating CDN for website, and calculating timings for webpage load
+## Execution
+
+python run.py
+- use CONST.py to change runtime variables (temporary)
+
+## Requirements:
+
+- cymruwhois
+- pandas
+- urllib
+- requests
+- python 3
 
 ## Components
+
+The code is basically split into 3 parts: fetching ASN info, estimating CDN for website, and calculating timings for webpage load
+
 - run.py is the main python file that is launched. It calls estimate_cdn.py, calculate_timings.py, and fetch_site_info.py
 - fetch_site_info.py is used to download whois traces and website homepage for offline analysis
 - curl_time_format.txt specifies the event timings to be returned by curl and saved as json
@@ -15,12 +29,6 @@ The code is basically split into 3 parts: fetching ASN info, estimating CDN for 
 
 
 ## CDN estimation algorithm:
+
 - TODO see estimate_cdn_by_parse() in estimate_cdn.py
 
-
-## Requirements:
-- cymruwhois
-- pandas
-- urllib
-- requests
-- python 3
