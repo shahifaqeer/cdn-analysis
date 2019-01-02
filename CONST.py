@@ -1,3 +1,4 @@
+#!/usr/bin/python
 list_of_websites = 'data/top-1m-new.csv'                # location of alexa top websites as RANK,SITE\n
 # list_of_websites = 'data/test_bad_sites.csv'
 nwebsites = 500                                         # top 500 websites default

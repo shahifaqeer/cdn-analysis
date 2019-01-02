@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from __future__ import division
 import urllib.parse
 from bs4 import BeautifulSoup
