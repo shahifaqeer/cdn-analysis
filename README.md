@@ -15,9 +15,13 @@ for CDN estimation (details below).
 ### Plotting
 
 `jupyter notebook`
+
 - Analysis-CDN.ipynb
 - Analysis-ASN.ipynb
 - Analysis-Timing.ipynb
+
+The current ipython notebook analysis requires df_timing.pkl, df_cdn.pkl,
+and df_asn.pkl in the results/ folder.
 
 ## Requirements:
 
