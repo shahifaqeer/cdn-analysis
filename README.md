@@ -25,13 +25,19 @@ To view results and plots of the current dataset, click the following links:
 - [Analysis-Timing.ipynb](https://gitlab.com/sgrover/thousandeyeschallenge/blob/master/Analysis-Timing.ipynb)
 
 
-#### Note regarding current results
-A backup of the current results is available in results_old/ folder in case
-data is overwritten. Some previous results, such as comparison between curl data
-without redirects vs with redirects can only be plotted using downloaded 
-data output/curl-timing-data-reorder-count100-sites500.json and 
-output/curl_timing_count100_sites500.json. These files have been copied to the
-results_old/ directory for ease of reproducing the analysis.
+#### Note on reproducing current results
+A backup of the current results is available in data/ folder in case results
+are overwritten. Some previous results, such as comparison between curl data
+without redirects vs with redirects can only be plotted using 
+data/curl-timing-data-reorder-count100-sites500.json and 
+data/curl_timing_count100_sites500.json. For CDN estimation results, we need
+the offline files data/homepage and data/whoisIP.
+
+To reproduce timing analysis, copy curl files to the output/ directory and run 
+`calculate_timings.py`.
+
+To reproduce cdn estimation, unzip homepage and whoisIP to output/ directory
+and run `estimate_cdn.py`
 
 ## Requirements:
 
