@@ -247,6 +247,10 @@ class CDN:
                 url_score = sorted_url_count[0][1]/self.get_total_links()
                 if url_score >= 0.5:
                     self.most_linked_url = sorted_url_count[0][0]
+
+        # TODO add "multiple CDNs" category by adding scores for multiple CDNs.
+        #  Compare total CDN score to score across local links and unknown urls
+
         return
 
     def process(self):
