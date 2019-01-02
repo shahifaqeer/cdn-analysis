@@ -14,15 +14,24 @@ for CDN estimation (details below).
 
 ### Plotting
 
-`jupyter notebook`
+To replot results run `jupyter notebook`. The current ipython notebook analysis
+requires df_timing.pkl, df_cdn.pkl, and df_asn.pkl in the results/ folder. These
+files are generated once you run `python run.py` in the home directory.
 
-- Analysis-CDN.ipynb
-- Analysis-ASN.ipynb
-- Analysis-Timing.ipynb
+To view results and plots of the current dataset, click the following links:
 
-The current ipython notebook analysis requires df_timing.pkl, df_cdn.pkl,
-and df_asn.pkl in the results/ folder. A backup of the current results is
-available in results_old/ folder in case data is overwritten.
+- [Analysis-CDN.ipynb](https://gitlab.com/sgrover/thousandeyeschallenge/blob/master/Analysis-CDN.ipynb)
+- [Analysis-ASN.ipynb](https://gitlab.com/sgrover/thousandeyeschallenge/blob/master/Analysis-ASN.ipynb)
+- [Analysis-Timing.ipynb](https://gitlab.com/sgrover/thousandeyeschallenge/blob/master/Analysis-Timing.ipynb)
+
+
+#### Note regarding current results
+A backup of the current results is available in results_old/ folder in case
+data is overwritten. Some previous results, such as comparison between curl data
+without redirects vs with redirects can only be plotted using downloaded 
+data output/curl-timing-data-reorder-count100-sites500.json and 
+output/curl_timing_count100_sites500.json. These files have been copied to the
+results_old/ directory for ease of reproducing the analysis.
 
 ## Requirements:
 
