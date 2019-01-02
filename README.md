@@ -41,6 +41,7 @@ and run `estimate_cdn.py`
 
 ## Requirements
 
+Use pip [pip3] install to install the following packages in your pythonenv:
 - cymruwhois
 - pandas
 - bs4 (BeautifulSoup)
