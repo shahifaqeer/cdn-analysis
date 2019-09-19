@@ -1,4 +1,4 @@
-# ThousandEyes Internet Measurement Challenge
+# CDN MEASUREMENT AND ANALYSIS
 
 This is the repository for Timing Analysis of top Alexa websites grouped by CDN
 and ASN. We use curl for timing analysis, and parse html tags and whois traces
@@ -20,9 +20,9 @@ files are generated once you run `python run.py` in the home directory.
 
 To view results and plots of the current dataset, click the following links:
 
-- [Analysis-CDN.ipynb](https://gitlab.com/sgrover/thousandeyeschallenge/blob/master/Analysis-CDN.ipynb)
-- [Analysis-ASN.ipynb](https://gitlab.com/sgrover/thousandeyeschallenge/blob/master/Analysis-ASN.ipynb)
-- [Analysis-Timing.ipynb](https://gitlab.com/sgrover/thousandeyeschallenge/blob/master/Analysis-Timing.ipynb)
+- [Analysis-CDN.ipynb](https://github.com/shahifaqeer/cdn-analysis/blob/master/Analysis-CDN.ipynb)
+- [Analysis-ASN.ipynb](https://github.com/shahifaqeer/cdn-analysis/blob/master/Analysis-ASN.ipynb)
+- [Analysis-Timing.ipynb](https://github.com/shahifaqeer/cdn-analysis/blob/master/Analysis-Timing.ipynb)
 
 
 #### Note on reproducing current results
