@@ -4,6 +4,8 @@ This is the repository for Timing Analysis of top Alexa websites grouped by CDN
 and ASN. We use curl for timing analysis, and parse html tags and whois traces
 for CDN estimation (details below).
 
+For Analysis Report: [Click Here](https://sarthakgrover.github.io/publication/cdn-analysis2019.pdf)
+
 ### Execution
 
 `python3 run.py`
